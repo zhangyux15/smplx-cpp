@@ -32,9 +32,11 @@ Smpl::Smpl(const SmplType& _type, const std::string &modelPath)
 	// hand
 	if (GetSmplDef(m_type).handJointSize > 0) {
 		m_lhandMean = MathUtil::LoadMat<float>(modelPath + "/lhand_mean.txt");
-		m_lhandComponents = MathUtil::LoadMat<float>(modelPath + "/lhand_components.txt").transpose();
+		m_lhandComponents = MathUtil::LoadMat<float>(modelPath + "/lhand_components.txt").topRows(
+			GetSmplDef(m_type).handPCASize).transpose();
 		m_rhandMean = MathUtil::LoadMat<float>(modelPath + "/rhand_mean.txt");
-		m_rhandComponents = MathUtil::LoadMat<float>(modelPath + "/rhand_components.txt").transpose();
+		m_rhandComponents = MathUtil::LoadMat<float>(modelPath + "/rhand_components.txt").topRows(
+			GetSmplDef(m_type).handPCASize).transpose();
 
 		assert(m_lhandComponents.cols() == GetSmplDef(m_type).handPCASize && m_rhandComponents.cols() == GetSmplDef(m_type).handPCASize);
 	}

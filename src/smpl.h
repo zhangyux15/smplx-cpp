@@ -51,7 +51,7 @@ inline const SmplDef& GetSmplDef(const SmplType& type)
 		_smplDefs[SMPLH].somatotypeSize = 10;
 		_smplDefs[SMPLH].expressionSize = 0;
 		_smplDefs[SMPLH].shapeSize = 10;
-		_smplDefs[SMPLH].handPCASize = 6;
+		_smplDefs[SMPLH].handPCASize = 15;
 		_smplDefs[SMPLH].parent.resize(52);
 		_smplDefs[SMPLH].parent << -1, 0, 0, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 9, 9, 12, 13, 14, 16, 17, 18, 19,		// body
 			20, 22, 23, 20, 25, 26, 20, 28, 29, 20, 31, 32, 20, 34, 35,								// lhand
@@ -64,7 +64,7 @@ inline const SmplDef& GetSmplDef(const SmplType& type)
 		_smplDefs[SMPLX].somatotypeSize = 10;
 		_smplDefs[SMPLX].expressionSize = 10;
 		_smplDefs[SMPLX].shapeSize = 20;
-		_smplDefs[SMPLX].handPCASize = 6;
+		_smplDefs[SMPLX].handPCASize = 15;
 		_smplDefs[SMPLX].parent.resize(55);
 		_smplDefs[SMPLX].parent << -1, 0, 0, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 9, 9, 12, 13, 14, 16, 17, 18, 19,		// body
 			15, 15, 15,																				// head
