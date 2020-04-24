@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <Eigen/Eigen>
+#include <filesystem>
 #include "math_util.h"
 #include "gmm.h"
 
@@ -17,23 +18,26 @@ GaussianModel::GaussianModel(const std::string& meanFile, const std::string& cov
 
 float GaussianModel::CalcLoss(const Eigen::VectorXf& param) const
 {
-	return ((covInv * (param - mean)).dot(param - mean));
+	const int size = int(param.size());
+	const Eigen::VectorXf tmp = param - mean.head(size);
+	return ((covInv.topLeftCorner(size, size) * tmp)).dot(tmp);
 }
 
 
 void GaussianModel::CalcTerm(const Eigen::VectorXf& param, Eigen::MatrixXf& ATA, Eigen::VectorXf& ATb) const
 {
-	ATA = covInv;
-	ATb = ATA * (mean - param);
+	const int size = int(param.size());
+	ATA = covInv.topLeftCorner(size, size);
+	ATb = ATA * (mean.head(size) - param);
 }
 
 
 GaussianMixtureModel::GaussianMixtureModel(const std::string& folder)
 {
-	Eigen::VectorXf weight = MathUtil::LoadMat<float>(folder + "/weight.txt");
+	Eigen::VectorXf weight = MathUtil::LoadMat<float>((std::filesystem::path(folder) / std::filesystem::path("weight.txt")).string());
 	for (int i = 0; i < weight.size(); i++)
-		gaussianModels.emplace_back(folder + "/mean_" + std::to_string(i) + ".txt", 
-			folder + "/cov_" + std::to_string(i) + ".txt", weight[i]);
+		gaussianModels.emplace_back((std::filesystem::path(folder) / std::filesystem::path("mean_" + std::to_string(i) + ".txt")).string(),
+			(std::filesystem::path(folder) / std::filesystem::path("cov_" + std::to_string(i) + ".txt")).string(), weight[i]);
 }
 
 

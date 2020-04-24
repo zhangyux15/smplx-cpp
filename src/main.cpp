@@ -1,4 +1,5 @@
 #include "smpl.h"
+#include <iostream>
 
 int main()
 {
